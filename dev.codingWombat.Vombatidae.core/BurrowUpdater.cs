@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using dev.codingWombat.Vombatidae.config;
+using dev.codingWombat.Vombatidae.business;
 using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.core
@@ -23,7 +23,7 @@ namespace dev.codingWombat.Vombatidae.core
 
         public async Task<Burrow> Update(Guid guid, Burrow burrow)
         {
-            var existing = await _repository.ReadAsync(guid);
+            var existing = await _repository.ReadBurrowAsync(guid);
 
             if (existing.Modified != burrow.Modified)
             {
@@ -32,7 +32,7 @@ namespace dev.codingWombat.Vombatidae.core
 
             burrow.Modified = DateTime.UtcNow;
             
-            await _repository.WriteAsync(burrow);
+            await _repository.WriteBurrowAsync(burrow);
 
             return burrow;
         }

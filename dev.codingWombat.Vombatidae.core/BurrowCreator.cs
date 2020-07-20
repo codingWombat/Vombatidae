@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
-using dev.codingWombat.Vombatidae.config;
-using Microsoft.Extensions.Caching.Distributed;
+using dev.codingWombat.Vombatidae.business;
 using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.core
@@ -27,7 +25,7 @@ namespace dev.codingWombat.Vombatidae.core
         {
             var now = DateTime.UtcNow;
             var burrow = new Burrow {Id = Guid.NewGuid(), Create = now, Modified = now};
-            await _cache.WriteAsync(burrow);
+            await _cache.WriteBurrowAsync(burrow);
             return burrow;
         }
     }

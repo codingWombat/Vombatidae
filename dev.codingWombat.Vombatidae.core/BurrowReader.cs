@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
-using dev.codingWombat.Vombatidae.config;
-using Microsoft.Extensions.Caching.Distributed;
+using dev.codingWombat.Vombatidae.business;
 using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.core
@@ -25,7 +23,7 @@ namespace dev.codingWombat.Vombatidae.core
 
         public async Task<Burrow> Read(Guid guid)
         {
-            return  await _repository.ReadAsync(guid);
+            return  await _repository.ReadBurrowAsync(guid);
         }
     }
 }

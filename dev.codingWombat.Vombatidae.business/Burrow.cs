@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dev.codingWombat.Vombatidae.config
+namespace dev.codingWombat.Vombatidae.business
 {
     public class Burrow
     {

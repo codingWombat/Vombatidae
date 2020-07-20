@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.Controllers
 {
-    [Route("Vombatidae/burrow")]
+    [Route("Vombatidae/Burrow")]
     public class BurrowController : Controller
     {
         private readonly ILogger<BurrowController> _logger;
