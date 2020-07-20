@@ -4,5 +4,9 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\dev.codingWombat.Vombatidae.core\dev.codingWombat.Vombatidae.core.csproj" />
+    </ItemGroup>
+
 
 </Project>

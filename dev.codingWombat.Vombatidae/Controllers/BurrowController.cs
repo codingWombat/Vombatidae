@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using dev.codingWombat.Vombatidae.core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -8,18 +10,20 @@ namespace dev.codingWombat.Vombatidae.Controllers
     public class BurrowController : Controller
     {
         private readonly ILogger<BurrowController> _logger;
+        private readonly IBurrowCreator _creator;
 
-        public BurrowController(ILogger<BurrowController> logger)
+        public BurrowController(ILogger<BurrowController> logger, IBurrowCreator creator)
         {
             _logger = logger;
+            _creator = creator;
         }
 
         [HttpGet]
-        public ActionResult<string> Get()
+        public async Task<ActionResult<string>> Get()
         {
-            var guid = Guid.NewGuid();
-            _logger.LogInformation("New burrow created with Guid: {}", guid.ToString());
-            return Ok(guid.ToString());
+            var burrow = await _creator.Create();
+            _logger.LogInformation("New burrow created with Guid: {}", burrow.Id.ToString());
+            return Ok(burrow);
         }
     }
 }
