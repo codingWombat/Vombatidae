@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dev.codingWombat.Vombatidae", "dev.codingWombat.Vombatidae\dev.codingWombat.Vombatidae.csproj", "{727B7233-5E58-4DEC-9AF2-1E844988F39C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dev.codingWombat.Vombatidae.config", "dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj", "{DA377FE8-57E2-4C88-870B-087A222C7B74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dev.codingWombat.Vombatidae.core", "dev.codingWombat.Vombatidae.core\dev.codingWombat.Vombatidae.core.csproj", "{F7116271-88A7-42C1-B0F4-15D56385D582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{727B7233-5E58-4DEC-9AF2-1E844988F39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{727B7233-5E58-4DEC-9AF2-1E844988F39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{727B7233-5E58-4DEC-9AF2-1E844988F39C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA377FE8-57E2-4C88-870B-087A222C7B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA377FE8-57E2-4C88-870B-087A222C7B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA377FE8-57E2-4C88-870B-087A222C7B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA377FE8-57E2-4C88-870B-087A222C7B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7116271-88A7-42C1-B0F4-15D56385D582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7116271-88A7-42C1-B0F4-15D56385D582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7116271-88A7-42C1-B0F4-15D56385D582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7116271-88A7-42C1-B0F4-15D56385D582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
