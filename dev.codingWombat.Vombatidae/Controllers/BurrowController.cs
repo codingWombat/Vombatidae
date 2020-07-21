@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
