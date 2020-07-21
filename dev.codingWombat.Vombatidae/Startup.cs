@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace dev.codingWombat.Vombatidae
@@ -20,6 +21,7 @@ namespace dev.codingWombat.Vombatidae
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddTransient<IResponseHelper, ResponseHelper>();
             services.AddControllers();
             services.AddCoreServiceConfig();
             services.AddConfigurationServiceConfig(Configuration);

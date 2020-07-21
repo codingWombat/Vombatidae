@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
+using dev.codingWombat.Vombatidae.business;
 using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.core
 {
     public interface IResponseReader
     {
-        public Task<JsonElement> ReadResponse(string httpMethod, Guid guid);
+        public Task<Response> ReadResponse(string httpMethod, Guid guid);
     }
     
     public class ResponseReader : IResponseReader
@@ -23,15 +23,17 @@ namespace dev.codingWombat.Vombatidae.core
             _logger = logger;
         }
 
-        public async Task<JsonElement> ReadResponse(string httpMethod, Guid guid)
+        public async Task<Response> ReadResponse(string httpMethod, Guid guid)
         {
             var burrow = await _reader.Read(guid);
-
             var response = await _cache.ReadResponseBodyAsync(httpMethod, guid);
+
+            var statusCodeElement = response.GetProperty("StatusCode");
+            var responseMessageElement = response.GetProperty("ResponseMessage");
 
             _logger.LogDebug("read response for guid: {}, httpMethod {}", burrow.Id.ToString(), httpMethod);
 
-            return response;
+            return new Response(){ResponseMessage = responseMessageElement, StatusCode = statusCodeElement.GetInt32()};
         }
     }
 }

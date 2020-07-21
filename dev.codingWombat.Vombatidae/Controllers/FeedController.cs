@@ -24,5 +24,12 @@ namespace dev.codingWombat.Vombatidae.Controllers
             await _upserter.UpsertResponse(guid, method, HttpContext.Request.Body);
             return Ok();
         }
+        
+        [HttpPut("{Guid}/{Method}/foo")]
+        public async Task<IActionResult> PutFoo([FromRoute] Guid guid, [FromRoute] string method)
+        {
+            await _upserter.UpsertResponse(guid, method, HttpContext.Request.Body);
+            return Ok();
+        }
     }
 }

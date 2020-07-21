@@ -6,5 +6,6 @@
         public bool UseReddis { get; set; }
         public string Host { get; set; }
         public string Instance { get; set; }
+        public int SlidingExpiration { get; set; }
     }
 }

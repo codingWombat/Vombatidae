@@ -2,8 +2,10 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
+using dev.codingWombat.Vombatidae.config;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace dev.codingWombat.Vombatidae.core
 {
@@ -19,11 +21,13 @@ namespace dev.codingWombat.Vombatidae.core
     {
         private readonly IDistributedCache _cache;
         private readonly ILogger<CacheRepository> _logger;
+        private readonly CacheConfiguration _configuration;
 
-        public CacheRepository(IDistributedCache cache, ILogger<CacheRepository> logger)
+        public CacheRepository(IDistributedCache cache, ILogger<CacheRepository> logger, IOptions<CacheConfiguration> configuration)
         {
             _cache = cache;
             _logger = logger;
+            _configuration = configuration.Value;
         }
 
         public async Task<Burrow> ReadBurrowAsync(Guid guid)
@@ -50,7 +54,8 @@ namespace dev.codingWombat.Vombatidae.core
 
             var jsonBurrow = JsonSerializer.Serialize(burrow);
             await _cache.SetStringAsync(burrow.Id.ToString(), jsonBurrow,
-                new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
+                new DistributedCacheEntryOptions().SetSlidingExpiration(
+                    TimeSpan.FromSeconds(_configuration.SlidingExpiration)));
 
             _logger.LogDebug("Finished writing burrow with id {} to cache.", burrow.Id.ToString());
         }
@@ -59,9 +64,10 @@ namespace dev.codingWombat.Vombatidae.core
         {
             _logger.LogDebug("Start writing response for guid: {} and method: {} to cache.", guid.ToString(),
                 httpMethod);
-
+            
             await _cache.SetStringAsync(guid + "_" + httpMethod, responseBody,
-                new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1)));
+                new DistributedCacheEntryOptions().SetSlidingExpiration(
+                    TimeSpan.FromSeconds(_configuration.SlidingExpiration)));
 
             _logger.LogDebug("Finished writing response for guid: {} and method: {} to cache.", guid.ToString(),
                 httpMethod);
@@ -71,7 +77,8 @@ namespace dev.codingWombat.Vombatidae.core
         {
             _logger.LogDebug("Start reading response for guid {} and method {} from cache.", guid.ToString(),
                 httpMethod);
-
+            await ReadBurrowAsync(guid);
+            
             var response = await _cache.GetStringAsync(guid + "_" + httpMethod);
 
             if (string.IsNullOrWhiteSpace(response))

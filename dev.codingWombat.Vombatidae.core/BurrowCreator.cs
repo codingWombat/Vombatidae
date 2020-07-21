@@ -24,7 +24,8 @@ namespace dev.codingWombat.Vombatidae.core
         public async Task<Burrow> Create()
         {
             var now = DateTime.UtcNow;
-            var burrow = new Burrow {Id = Guid.NewGuid(), Create = now, Modified = now};
+            var burrow = new Burrow
+                {Id = Guid.NewGuid(), Create = now, Modified = now};
             await _cache.WriteBurrowAsync(burrow);
             return burrow;
         }

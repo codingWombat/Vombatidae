@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\dev.codingWombat.Vombatidae.business\dev.codingWombat.Vombatidae.business.csproj" />
+      <ProjectReference Include="..\dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj" />
     </ItemGroup>
 
 </Project>
