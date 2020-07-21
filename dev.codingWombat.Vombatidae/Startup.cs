@@ -1,3 +1,5 @@
+using System;
+using dev.codingWombat.Vombatidae.config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +22,28 @@ namespace dev.codingWombat.Vombatidae
         {
             services.AddControllers();
             services.AddCoreServiceConfig();
-            services.AddDistributedMemoryCache();
+            services.AddConfigurationServiceConfig(Configuration);
+            
+            var cacheConfig = new CacheConfiguration();
+            Configuration.GetSection(CacheConfiguration.Configuration).Bind(cacheConfig);
+
+            if (cacheConfig.UseReddis)
+            {
+                if (string.IsNullOrWhiteSpace(cacheConfig.Host) || string.IsNullOrWhiteSpace(cacheConfig.Instance))
+                {
+                    throw new Exception("Reddis not configured properly");
+                }
+
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = cacheConfig.Host;
+                    options.InstanceName = cacheConfig.Instance;
+                }); 
+            }
+            else
+            {
+                services.AddDistributedMemoryCache();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

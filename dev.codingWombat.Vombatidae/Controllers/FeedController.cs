@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.core;
 using Microsoft.AspNetCore.Mvc;
@@ -12,23 +11,18 @@ namespace dev.codingWombat.Vombatidae.Controllers
     public class FeedController : Controller
     {
         private readonly ILogger<FeedController> _logger;
-        private readonly ICacheRepository _repository;
+        private readonly IResponseUpserter _upserter;
 
-        public FeedController(ILogger<FeedController> logger, ICacheRepository repository)
+        public FeedController(ILogger<FeedController> logger, IResponseUpserter upserter)
         {
             _logger = logger;
-            _repository = repository;
+            _upserter = upserter;
         }
 
         [HttpPut("{Guid}/{Method}")]
         public async Task<IActionResult> Put([FromRoute] Guid guid, [FromRoute] string method)
         {
-            using (var stream = new StreamReader(HttpContext.Request.Body))
-            {
-                var preparedResponse = await stream.ReadToEndAsync();
-                await _repository.WriteResponseBodyAsync(method.ToUpper(), guid, preparedResponse);
-            }
-            
+            await _upserter.UpsertResponse(guid, method, HttpContext.Request.Body);
             return Ok();
         }
     }

@@ -34,6 +34,7 @@ namespace dev.codingWombat.Vombatidae.core
             
             await _repository.WriteBurrowAsync(burrow);
 
+            _logger.LogDebug("Burrow {} updated with new config.", guid.ToString());
             return burrow;
         }
     }

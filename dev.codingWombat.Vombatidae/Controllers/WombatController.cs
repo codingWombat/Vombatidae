@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
 using dev.codingWombat.Vombatidae.core;
@@ -11,58 +12,51 @@ namespace dev.codingWombat.Vombatidae.Controllers
     public class WombatController : Controller
     {
         private readonly ILogger<WombatController> _logger;
-        private readonly IBurrowReader _reader;
         private readonly IBurrowUpdater _updater;
-        private readonly ICacheRepository _cache;
-        
-        public WombatController(ILogger<WombatController> logger, IBurrowReader reader, IBurrowUpdater updater, ICacheRepository cache)
+        private readonly IResponseReader _reader;
+
+        public WombatController(ILogger<WombatController> logger, IBurrowUpdater updater, IResponseReader reader)
         {
             _logger = logger;
-            _reader = reader;
             _updater = updater;
-            _cache = cache;
+            _reader = reader;
         }
 
         [HttpPut("{Guid}/config")]
         public async Task<IActionResult> PutConfig([FromRoute] Guid guid, [FromBody] Burrow burrowDto)
         {
             var burrow = await _updater.Update(guid, burrowDto);
-            
-            _logger.LogInformation("guid: {}",burrow.Id.ToString());
+
             return Ok(burrow);
         }
 
         [HttpGet("{Guid}")]
         public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
-            var burrow = await _reader.Read(guid);
-
-            var response = await _cache.ReadResponseBodyAsync("GET", guid);
-            
-            _logger.LogInformation("guid: {}", burrow.Id.ToString());
+            var response = await _reader.ReadResponse("GET", guid);
 
             return Ok(response);
         }
-        
+
         [HttpPost("{Guid}")]
-        public IActionResult Post([FromRoute] Guid guid)
+        public async Task<IActionResult> Post([FromRoute] Guid guid)
         {
-            _logger.LogInformation("guid: {}", guid.ToString());
-            return Ok();
+            var response = await _reader.ReadResponse("POST", guid);
+            return Ok(response);
         }
-        
+
         [HttpPut("{Guid}")]
-        public IActionResult Put([FromRoute] Guid guid)
+        public async Task<IActionResult> Put([FromRoute] Guid guid)
         {
-            _logger.LogInformation("guid: {}", guid.ToString());
-            return Ok();
+            var response = await _reader.ReadResponse("PUT", guid);
+            return Ok(response);
         }
-        
+
         [HttpDelete("{Guid}")]
-        public IActionResult Delete([FromRoute] Guid guid)
+        public async Task<IActionResult> Delete([FromRoute] Guid guid)
         {
-            _logger.LogInformation("guid: {}", guid.ToString());
-            return Ok();
+            var response = await _reader.ReadResponse("DELETE", guid);
+            return Ok(response);
         }
     }
 }
