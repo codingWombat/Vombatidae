@@ -5,7 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
+      <ProjectReference Include="..\dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj" />
+      <ProjectReference Include="..\dev.codingWombat.Vombatidae.core\dev.codingWombat.Vombatidae.core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.6" />
     </ItemGroup>
 
 
