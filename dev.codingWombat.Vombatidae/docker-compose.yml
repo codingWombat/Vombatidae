@@ -1,0 +1,22 @@
+﻿version: "3"
+services:
+  web:
+    image: "dev.codingwombat.vomabtidae"
+    ports:
+      - "8081:80"
+    environment:
+      Cache__UseRedis: "true" 
+      Cache__Host: "redis"
+      Cache__Instance: "Wombat"
+      Cache__SlidingExpiration: 12600
+    networks:
+      - wombatnet
+    depends_on:
+      - redis
+  redis:
+    image: "redis:latest"
+    hostname: redis
+    networks:
+      - wombatnet
+networks:
+  wombatnet:
