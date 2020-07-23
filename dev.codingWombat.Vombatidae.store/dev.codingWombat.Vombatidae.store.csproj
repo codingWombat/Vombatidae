@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
-    </ItemGroup>
-    
-    <ItemGroup>
       <ProjectReference Include="..\dev.codingWombat.Vombatidae.business\dev.codingWombat.Vombatidae.business.csproj" />
       <ProjectReference Include="..\dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj" />
-      <ProjectReference Include="..\dev.codingWombat.Vombatidae.store\dev.codingWombat.Vombatidae.store.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.6" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
     </ItemGroup>
 
 </Project>

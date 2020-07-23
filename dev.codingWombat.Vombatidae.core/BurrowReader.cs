@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
+using dev.codingWombat.Vombatidae.store;
 using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae.core

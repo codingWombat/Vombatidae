@@ -25,6 +25,7 @@ namespace dev.codingWombat.Vombatidae
             services.TryAddTransient<IResponseHelper, ResponseHelper>();
             services.AddControllers();
             services.AddCoreServiceConfig();
+            services.AddStoreServiceConfig();
             services.AddConfigurationServiceConfig(Configuration);
             
             var cacheConfig = new CacheConfiguration();

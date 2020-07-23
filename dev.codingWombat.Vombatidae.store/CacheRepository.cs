@@ -7,7 +7,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace dev.codingWombat.Vombatidae.core
+namespace dev.codingWombat.Vombatidae.store
 {
     public interface ICacheRepository
     {
