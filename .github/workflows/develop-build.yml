@@ -1,0 +1,32 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ develop, master ]
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.302
+    - name: Install version tool
+      run: dotnet tool install -g dotnet-setversion
+    - name: Call version tool
+      run: setversion -r "@version.txt"
+    - name: Install dependencies
+      run: dotnet restore
+    - name: publish
+      run: dotnet publish --configuration Release
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1
+      with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: codingwombat/vombatidae
+          tags: ${GITHUB_REF#refs/heads/}
