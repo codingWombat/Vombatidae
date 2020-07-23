@@ -3,6 +3,11 @@
 GET  https://localhost:5001/Vombatidae/Burrow
 Accept: application/json
 
+#### Burrow docker
+
+GET  http://localhost:8081/Vombatidae/Burrow
+Accept: application/json
+
 
 #### Config
 PUT https://localhost:5001/Vombatidae/1c57abf1-8dc2-4a42-8734-e66de66b6e7a/config
@@ -27,6 +32,19 @@ Content-Type: application/json
   }
 }
 
+#### Feeding docker
+PUT http://localhost:8081/Vombatidae/Feed/e1a2c681-8ac0-4d00-a78d-e08603ab84c2/get
+Content-Type: application/json
+
+{
+  "StatusCode": 202,
+  "ResponseMessage": {
+    "id": "e2aa5410-2da2-4d61-a10a-23770f221982",
+    "create": "2020-07-20T12:04:40.5871572Z",
+    "modified": "2020-07-20T12:04:40.5871572Z"
+  }
+}
+
 ###
 POST https://localhost:5001/Vombatidae/f1e05992-de37-44f3-b09e-ecbc32149711
 Content-Type: application/json
@@ -35,6 +53,10 @@ Content-Type: application/json
 
 ###
 GET https://localhost:5001/Vombatidae/09040ad8-3256-42d3-b5e7-0d6bfe1e65f0
+Accept: application/json
+
+### GET docker
+GET http://localhost:8081/Vombatidae/e1a2c681-8ac0-4d00-a78d-e08603ab84c2
 Accept: application/json
 
 

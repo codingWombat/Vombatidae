@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae
 {
@@ -29,11 +30,11 @@ namespace dev.codingWombat.Vombatidae
             var cacheConfig = new CacheConfiguration();
             Configuration.GetSection(CacheConfiguration.Configuration).Bind(cacheConfig);
 
-            if (cacheConfig.UseReddis)
+            if (cacheConfig.UseRedis)
             {
                 if (string.IsNullOrWhiteSpace(cacheConfig.Host) || string.IsNullOrWhiteSpace(cacheConfig.Instance))
                 {
-                    throw new Exception("Reddis not configured properly");
+                    throw new Exception("Redis not configured properly");
                 }
 
                 services.AddStackExchangeRedisCache(options =>
