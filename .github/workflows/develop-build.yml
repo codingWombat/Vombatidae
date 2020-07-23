@@ -23,10 +23,14 @@ jobs:
       run: dotnet restore
     - name: publish
       run: dotnet publish --configuration Release
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
     - name: Build and push Docker images
       uses: docker/build-push-action@v1
       with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: codingwombat/vombatidae
-          tags: ${GITHUB_REF#refs/heads/}
+          tags: ${{ steps.extract_branch.outputs.branch }}
