@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Linq;
 
 namespace dev.codingWombat.Vombatidae.business
 {
@@ -8,7 +7,6 @@ namespace dev.codingWombat.Vombatidae.business
     {
         public Guid Id { get; set; }
         public ConcurrentQueue<RequestResponse> History { get; set; }
-        
         
         public void Append(RequestResponse requestResponse)
         {
