@@ -12,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.TryAddTransient<IBurrowUpdater, BurrowUpdater>();
             services.TryAddTransient<IResponseReader, ResponseReader>();
             services.TryAddTransient<IResponseUpserter, ResponseUpserter>();
+            services.TryAddSingleton<IHistoryHandler, HistoryHandler>();
             
             return services;
         }

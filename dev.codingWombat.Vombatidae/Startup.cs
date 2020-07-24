@@ -27,6 +27,7 @@ namespace dev.codingWombat.Vombatidae
             services.AddCoreServiceConfig();
             services.AddStoreServiceConfig();
             services.AddConfigurationServiceConfig(Configuration);
+            services.AddHostedService<HistoryService>();
             
             var cacheConfig = new CacheConfiguration();
             Configuration.GetSection(CacheConfiguration.Configuration).Bind(cacheConfig);

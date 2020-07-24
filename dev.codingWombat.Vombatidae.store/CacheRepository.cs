@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
@@ -13,17 +16,26 @@ namespace dev.codingWombat.Vombatidae.store
     {
         Task<Burrow> ReadBurrowAsync(Guid guid);
         Task WriteBurrowAsync(Burrow burrow);
-        Task WriteResponseBodyAsync(string httpMethod, Guid guid, string responseBody);
         Task<JsonElement> ReadResponseBodyAsync(string httpMethod, Guid guid);
+        Task WriteResponseBodyAsync(string httpMethod, Guid guid, string responseBody);
+        Dictionary<string, RequestResponseHistory> ReadHistory();
+        Task WriteHistoryAsync(Dictionary<string, RequestResponseHistory> history);
     }
 
     internal class CacheRepository : ICacheRepository
     {
+        private class TmpHistory
+        {
+            public Guid Id { get; set; }
+            public Queue<RequestResponse> History { get; set; }
+        }
+
         private readonly IDistributedCache _cache;
         private readonly ILogger<CacheRepository> _logger;
         private readonly CacheConfiguration _configuration;
 
-        public CacheRepository(IDistributedCache cache, ILogger<CacheRepository> logger, IOptions<CacheConfiguration> configuration)
+        public CacheRepository(IDistributedCache cache, ILogger<CacheRepository> logger,
+            IOptions<CacheConfiguration> configuration)
         {
             _cache = cache;
             _logger = logger;
@@ -60,25 +72,12 @@ namespace dev.codingWombat.Vombatidae.store
             _logger.LogDebug("Finished writing burrow with id {} to cache.", burrow.Id.ToString());
         }
 
-        public async Task WriteResponseBodyAsync(string httpMethod, Guid guid, string responseBody)
-        {
-            _logger.LogDebug("Start writing response for guid: {} and method: {} to cache.", guid.ToString(),
-                httpMethod);
-            
-            await _cache.SetStringAsync(guid + "_" + httpMethod, responseBody,
-                new DistributedCacheEntryOptions().SetSlidingExpiration(
-                    TimeSpan.FromSeconds(_configuration.SlidingExpiration)));
-
-            _logger.LogDebug("Finished writing response for guid: {} and method: {} to cache.", guid.ToString(),
-                httpMethod);
-        }
-
         public async Task<JsonElement> ReadResponseBodyAsync(string httpMethod, Guid guid)
         {
             _logger.LogDebug("Start reading response for guid {} and method {} from cache.", guid.ToString(),
                 httpMethod);
             await ReadBurrowAsync(guid);
-            
+
             var response = await _cache.GetStringAsync(guid + "_" + httpMethod);
 
             if (string.IsNullOrWhiteSpace(response))
@@ -91,6 +90,51 @@ namespace dev.codingWombat.Vombatidae.store
 
             using var doc = JsonDocument.Parse(response);
             return doc.RootElement.Clone();
+        }
+
+        public async Task WriteResponseBodyAsync(string httpMethod, Guid guid, string responseBody)
+        {
+            _logger.LogDebug("Start writing response for guid: {} and method: {} to cache.", guid.ToString(),
+                httpMethod);
+
+            await _cache.SetStringAsync(guid + "_" + httpMethod, responseBody,
+                new DistributedCacheEntryOptions().SetSlidingExpiration(
+                    TimeSpan.FromSeconds(_configuration.SlidingExpiration)));
+
+            _logger.LogDebug("Finished writing response for guid: {} and method: {} to cache.", guid.ToString(),
+                httpMethod);
+        }
+
+        public Dictionary<string, RequestResponseHistory> ReadHistory()
+        {
+            _logger.LogDebug("Start loading request history");
+
+            var historyString = _cache.GetString("history");
+
+            if (string.IsNullOrWhiteSpace(historyString))
+            {
+                _logger.LogDebug("Finished loading empty request history");
+                return new Dictionary<string, RequestResponseHistory>();
+            }
+
+            var history = JsonSerializer.Deserialize<Dictionary<string, TmpHistory>>(historyString);
+
+            _logger.LogDebug("Finished loading request history");
+
+            return history.ToDictionary(pair => pair.Key,
+                pair => new RequestResponseHistory
+                    {Id = Guid.Parse(pair.Key), History = new ConcurrentQueue<RequestResponse>(pair.Value.History)});
+        }
+
+        public async Task WriteHistoryAsync(Dictionary<string, RequestResponseHistory> history)
+        {
+            _logger.LogDebug("Start writing history.");
+            var jsonHistory = JsonSerializer.Serialize(history);
+            await _cache.SetStringAsync("history", jsonHistory,
+                new DistributedCacheEntryOptions().SetSlidingExpiration(
+                    TimeSpan.FromSeconds(_configuration.SlidingExpiration)));
+
+            _logger.LogDebug("Finished writing history.");
         }
     }
 }
