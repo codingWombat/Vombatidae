@@ -23,7 +23,6 @@ namespace dev.codingWombat.Vombatidae.core
         {
             _repository = repository;
             _historyCache = new ConcurrentDictionary<string, RequestResponseHistory>(repository.ReadHistory());
-            
         }
 
         public RequestResponseHistory Load(Guid id)

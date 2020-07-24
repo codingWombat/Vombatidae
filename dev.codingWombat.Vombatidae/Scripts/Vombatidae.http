@@ -3,24 +3,30 @@
 GET  https://localhost:5001/Vombatidae/Burrow
 Accept: application/json
 
+> {% client.global.set("guid", response.body.id) %}
+
+
 #### Burrow docker
 
 GET  http://localhost:8081/Vombatidae/Burrow
 Accept: application/json
 
+> {% 
+client.global.set("guid", response.body.id)
+ %}
 
 #### save history
-POST https://localhost:5001/Vombatidae/history
+POST https://localhost:5001/Vombatidae/history/
 Accept: application/json
 
 {}
 
 #### get history
-GET https://localhost:5001/Vombatidae/history/d2cea6e1-13c4-42dd-9df7-0b0dddb41aee
+GET https://localhost:5001/Vombatidae/history/{{guid}}
 Accept: application/json
 
 #### Config
-PUT https://localhost:5001/Vombatidae/1c57abf1-8dc2-4a42-8734-e66de66b6e7a/config
+PUT https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
 {
@@ -30,7 +36,7 @@ Content-Type: application/json
 }
 
 #### Feeding
-PUT https://localhost:5001/Vombatidae/Feed/d2cea6e1-13c4-42dd-9df7-0b0dddb41aee/get
+PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/get
 Content-Type: application/json
 
 {
@@ -43,7 +49,7 @@ Content-Type: application/json
 }
 
 #### Feeding docker
-PUT http://localhost:8081/Vombatidae/Feed/e1a2c681-8ac0-4d00-a78d-e08603ab84c2/get
+PUT http://localhost:8081/Vombatidae/Feed/{{guid}}/get
 Content-Type: application/json
 
 {
@@ -56,28 +62,28 @@ Content-Type: application/json
 }
 
 ###
-POST https://localhost:5001/Vombatidae/f1e05992-de37-44f3-b09e-ecbc32149711
+POST https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
 {}
 
 ###
-GET https://localhost:5001/Vombatidae/d2cea6e1-13c4-42dd-9df7-0b0dddb41aee
+GET https://localhost:5001/Vombatidae/{{guid}}
 Accept: application/json
 
 ### GET docker
-GET http://localhost:8081/Vombatidae/e1a2c681-8ac0-4d00-a78d-e08603ab84c2
+GET http://localhost:8081/Vombatidae/{{guid}}
 Accept: application/json
 
 
 ###
-PUT https://localhost:5001/Vombatidae/f1e05992-de37-44f3-b09e-ecbc32149711
+PUT https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
 {}
 
 ### 
-DELETE https://localhost:5001/Vombatidae/f1e05992-de37-44f3-b09e-ecbc32149711
+DELETE https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
 {}
