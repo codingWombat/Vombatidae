@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae
 {
@@ -25,7 +24,9 @@ namespace dev.codingWombat.Vombatidae
             services.TryAddTransient<IResponseHelper, ResponseHelper>();
             services.AddControllers();
             services.AddCoreServiceConfig();
+            services.AddStoreServiceConfig();
             services.AddConfigurationServiceConfig(Configuration);
+            services.AddHostedService<HistoryService>();
             
             var cacheConfig = new CacheConfiguration();
             Configuration.GetSection(CacheConfiguration.Configuration).Bind(cacheConfig);

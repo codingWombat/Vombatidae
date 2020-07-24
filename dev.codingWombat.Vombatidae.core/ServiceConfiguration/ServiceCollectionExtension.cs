@@ -10,9 +10,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.TryAddTransient<IBurrowCreator, BurrowCreator>();
             services.TryAddTransient<IBurrowReader, BurrowReader>();
             services.TryAddTransient<IBurrowUpdater, BurrowUpdater>();
-            services.TryAddTransient<ICacheRepository, CacheRepository>();
             services.TryAddTransient<IResponseReader, ResponseReader>();
             services.TryAddTransient<IResponseUpserter, ResponseUpserter>();
+            services.TryAddSingleton<IHistoryHandler, HistoryHandler>();
             
             return services;
         }
