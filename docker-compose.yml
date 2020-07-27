@@ -1,7 +1,7 @@
 ﻿version: "3"
 services:
   web:
-    image: "codingwombat/vombatidae:develop"
+    image: "codingwombat/vombatidae:master"
     ports:
       - "8081:80"
     environment:

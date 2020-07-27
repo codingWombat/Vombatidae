@@ -49,7 +49,7 @@ For **Vombatidae** there is also a docker container available that can be found 
 To run the container on your machine without Redis use the following command:
 
 ````Docker
-docker run -p 8081:80 --env Cache__UseRedis=false --env Cache__SlidingExpiration=12600 --name vombatidae codingwombat/vombatidae:develop  
+docker run -p 8081:80 --env Cache__UseRedis=false --env Cache__SlidingExpiration=12600 --name vombatidae codingwombat/vombatidae:master  
 ````
 
 To run **Vombatidae** with an attached Redis use `docker-compose -d up` with the `docker-compose.yml` that is located in the top level of the repo.
