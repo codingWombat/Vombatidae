@@ -15,8 +15,13 @@ services:
       - redis
   redis:
     image: "redis:latest"
+    command: ["redis-server", "--appendonly", "yes"]
     hostname: redis
     networks:
       - wombatnet
+    volumes:
+      - redis-data:/data 
 networks:
   wombatnet:
+volumes:
+  redis-data:

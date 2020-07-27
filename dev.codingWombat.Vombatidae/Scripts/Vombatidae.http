@@ -25,6 +25,10 @@ Accept: application/json
 GET https://localhost:5001/Vombatidae/history/{{guid}}
 Accept: application/json
 
+#### get history docker
+GET http://localhost:8081/Vombatidae/history/{{guid}}
+Accept: application/json
+
 #### Config
 PUT https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
