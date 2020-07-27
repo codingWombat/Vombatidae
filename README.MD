@@ -66,7 +66,6 @@ The `Guid` defines what endpoint should be used and `RESTverb` defines for what 
 Allowed values are: `GET`, `POST`, `PUT`, `DELETE`.
 The response itself will be send inside the body in the following format:
     ````JSON
-    {
         {
         "StatusCode": 200,
         "ResponseMessage": {
@@ -74,8 +73,8 @@ The response itself will be send inside the body in the following format:
             "int": 123456789,
             "bool": true,
             "datetime":"2020-07-21T11:22:47.834561Z"
+            }
         }
-    }
     ````
     `StatusCode` is the http response code used for the response.
     `ResponseMessage` is a wrapper for the response message it can contain any JSON you want.
