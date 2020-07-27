@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.core;
+using dev.codingWombat.Vombatidae.Filter;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dev.codingWombat.Vombatidae.Controllers
@@ -22,10 +23,11 @@ namespace dev.codingWombat.Vombatidae.Controllers
             return Ok();
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        [HttpGet("{Guid}")]
+        [RouteValidationFilter]
+        public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
-            var requestResponseHistory = _historyHandler.Load(id);
+            var requestResponseHistory = _historyHandler.Load(guid);
 
             return Ok(requestResponseHistory.History);
         }

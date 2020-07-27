@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
 using dev.codingWombat.Vombatidae.core;
+using dev.codingWombat.Vombatidae.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -35,24 +36,28 @@ namespace dev.codingWombat.Vombatidae.Controllers
         }
 
         [HttpGet("{Guid}")]
+        [RouteValidationFilter]
         public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
             return await ActionResult(guid, "GET", HttpContext.Request.Body);
         }
 
         [HttpPost("{Guid}")]
+        [RouteValidationFilter]
         public async Task<IActionResult> Post([FromRoute] Guid guid)
         {
             return await ActionResult(guid, "POST", HttpContext.Request.Body);
         }
 
         [HttpPut("{Guid}")]
+        [RouteValidationFilter]
         public async Task<IActionResult> Put([FromRoute] Guid guid)
         {
             return await ActionResult(guid, "PUT", HttpContext.Request.Body);
         }
 
         [HttpDelete("{Guid}")]
+        [RouteValidationFilter]
         public async Task<IActionResult> Delete([FromRoute] Guid guid)
         {
             return await ActionResult(guid, "DELETE", HttpContext.Request.Body);
