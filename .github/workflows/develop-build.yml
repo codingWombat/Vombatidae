@@ -35,9 +35,3 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: codingwombat/vombatidae
         tags: ${{ steps.extract_branch.outputs.branch }}
-    - name: Docker Hub Description
-      uses: peter-evans/dockerhub-description@v2.1.0
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_USERPASSWORD }}
-        DOCKERHUB_REPOSITORY: codingwombat/vombatidae
