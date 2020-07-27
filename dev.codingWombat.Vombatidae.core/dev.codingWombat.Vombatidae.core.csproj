@@ -1,18 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <ProjectReference Include="..\dev.codingWombat.Vombatidae.business\dev.codingWombat.Vombatidae.business.csproj" />
-      <ProjectReference Include="..\dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj" />
-      <ProjectReference Include="..\dev.codingWombat.Vombatidae.store\dev.codingWombat.Vombatidae.store.csproj" />
-    </ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>0.0.0.1</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dev.codingWombat.Vombatidae.business\dev.codingWombat.Vombatidae.business.csproj" />
+    <ProjectReference Include="..\dev.codingWombat.Vombatidae.config\dev.codingWombat.Vombatidae.config.csproj" />
+    <ProjectReference Include="..\dev.codingWombat.Vombatidae.store\dev.codingWombat.Vombatidae.store.csproj" />
+  </ItemGroup>
 </Project>
