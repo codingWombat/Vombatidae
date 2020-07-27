@@ -42,9 +42,10 @@ Content-Type: application/json
 {
   "StatusCode": 200,
   "ResponseMessage": {
-    "id": "e2aa5410-2da2-4d61-a10a-23770f221982",
-    "create": "2020-07-20T12:04:40.5871572Z",
-    "modified": "2020-07-20T12:04:40.5871572Z"
+    "String": "this is a test string",
+    "int": 123456789,
+    "bool": true,
+    "datetime":"2020-07-21T11:22:47.834561Z"
   }
 }
 
@@ -53,11 +54,12 @@ PUT http://localhost:8081/Vombatidae/Feed/{{guid}}/get
 Content-Type: application/json
 
 {
-  "StatusCode": 202,
+  "StatusCode": 200,
   "ResponseMessage": {
-    "id": "e2aa5410-2da2-4d61-a10a-23770f221982",
-    "create": "2020-07-20T12:04:40.5871572Z",
-    "modified": "2020-07-20T12:04:40.5871572Z"
+    "String": "this is a test string",
+    "int": 123456789,
+    "bool": true,
+    "datetime":"2020-07-21T11:22:47.834561Z"
   }
 }
 
