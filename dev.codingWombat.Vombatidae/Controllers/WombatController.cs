@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
 using dev.codingWombat.Vombatidae.core;
@@ -72,8 +73,9 @@ namespace dev.codingWombat.Vombatidae.Controllers
                 _historyHandler.AppendRequest(id,
                     new RequestResponse
                     {
+                        Id = Guid.NewGuid(),
                         Timestamp = DateTime.UtcNow, HttpMethod = httpMethod, ResponseBody = response,
-                        RequestBody = body
+                        RequestBody = JsonDocument.Parse(body).RootElement
                     }
                 );
             }

@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 #### Feeding
-PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/get
+PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/put
 Content-Type: application/json
 
 {
@@ -71,7 +71,9 @@ Content-Type: application/json
 POST https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
-{}
+{
+  "foo": "bar"
+}
 
 ###
 GET https://localhost:5001/Vombatidae/{{guid}}
@@ -86,7 +88,9 @@ Accept: application/json
 PUT https://localhost:5001/Vombatidae/{{guid}}
 Content-Type: application/json
 
-{}
+{
+  "foo": "bar"
+}
 
 ### 
 DELETE https://localhost:5001/Vombatidae/{{guid}}
