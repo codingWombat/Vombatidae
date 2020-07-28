@@ -75,7 +75,9 @@ namespace dev.codingWombat.Vombatidae.Controllers
                     {
                         Id = Guid.NewGuid(),
                         Timestamp = DateTime.UtcNow, HttpMethod = httpMethod, ResponseBody = response,
-                        RequestBody = JsonDocument.Parse(body).RootElement
+                        RequestBody = string.IsNullOrWhiteSpace(body)
+                            ? JsonDocument.Parse("{}").RootElement
+                            : JsonDocument.Parse(body).RootElement
                     }
                 );
             }

@@ -37,7 +37,7 @@ namespace dev.codingWombat.Vombatidae
                 UseCors = true;
                 services.AddCors(options =>
                 {
-                    options.AddDefaultPolicy(builder => builder.WithOrigins(corsConfig.Origins));
+                    options.AddDefaultPolicy(builder => builder.WithOrigins(corsConfig.Origins).AllowAnyMethod().AllowAnyHeader());
                 });    
             }
             
