@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using dev.codingWombat.Vombatidae.business;
 using dev.codingWombat.Vombatidae.core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<string>> Get()
+        public async Task<ActionResult<Burrow>> Get()
         {
             var burrow = await _creator.Create();
             _logger.LogInformation("New burrow created with Guid: {}", burrow.Id.ToString());
