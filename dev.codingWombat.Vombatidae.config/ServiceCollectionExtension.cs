@@ -9,6 +9,7 @@ namespace dev.codingWombat.Vombatidae.config
             IConfiguration configuration)
         {
             services.Configure<CacheConfiguration>(configuration.GetSection(CacheConfiguration.Configuration));
+            services.Configure<CorsConfiguration>(configuration.GetSection(CorsConfiguration.Configuration));
 
             return services;
         }

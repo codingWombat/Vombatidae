@@ -24,6 +24,7 @@ The needed configuration can either be done in the appsettings.json or by settin
 |SlidingExpiration|int|y|The amount of seconds the data is kept in the cache. (Resets every time the end point is used.)|
 |Host|string|n|The host of the Redis server, must only be set if UseRedis is true|
 |Instance|string|n|The instance that is used in the Redis, must only be set if UseRedis is true|
+|Origins|string []|n|If you want to use a frontend application that runs on a different URL you must configure them here|
 
 Json:
 ```json
@@ -32,7 +33,10 @@ Json:
     "SlidingExpiration": 48200,
     "Host":"localhost",
     "Instance":"Foo"
-  }
+  },
+  "Cors": {
+      "Origins": ["https://localhost:8080", "http://example.com"]
+    }
 ```
 Environment variables:
 ```
@@ -40,6 +44,8 @@ Cache__Host=localhost;
 Cache__Instance=Foo;
 Cache__SlidingExpiration=48200;
 Cache__UseRedis=true
+Cors__Origins__0=http://example.com
+Cors__Origins__1=https://localhost:8080
 ```
 
 ### Docker
@@ -49,7 +55,7 @@ For **Vombatidae** there is also a docker container available that can be found 
 To run the container on your machine without Redis use the following command:
 
 ````Docker
-docker run -p 8081:80 --env Cache__UseRedis=false --env Cache__SlidingExpiration=12600 --name vombatidae codingwombat/vombatidae:master  
+docker run -p 8081:80 --env Cache__UseRedis=false --env Cache__SlidingExpiration=12600 --env Cors__Origins__0=http://example.com --env Cors__Origins__1=https://localhost:8080 --name vombatidae codingwombat/vombatidae:master  
 ````
 
 To run **Vombatidae** with an attached Redis use `docker-compose -d up` with the `docker-compose.yml` that is located in the top level of the repo.
