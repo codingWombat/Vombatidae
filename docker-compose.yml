@@ -1,7 +1,7 @@
 ﻿version: "3"
 services:
   web:
-    image: "codingwombat/vombatidae:develop"
+    image: "codingwombat/vombatidae:master"
     ports:
       - "8081:80"
     environment:
@@ -9,6 +9,8 @@ services:
       Cache__Host: "redis"
       Cache__Instance: "Wombat"
       Cache__SlidingExpiration: 12600
+      Cors__Origins__0: "http://example.com" 
+      Cors__Origins__1: "https://localhost:8080"
     networks:
       - wombatnet
     depends_on:

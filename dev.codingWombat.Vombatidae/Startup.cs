@@ -17,6 +17,7 @@ namespace dev.codingWombat.Vombatidae
         }
 
         public IConfiguration Configuration { get; }
+        private bool UseCors { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,6 +28,18 @@ namespace dev.codingWombat.Vombatidae
             services.AddStoreServiceConfig();
             services.AddConfigurationServiceConfig(Configuration);
             services.AddHostedService<HistoryService>();
+
+            var corsConfig = new CorsConfiguration();
+            Configuration.GetSection(CorsConfiguration.Configuration).Bind(corsConfig);
+
+            if (corsConfig.Origins.Length != 0)
+            {
+                UseCors = true;
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(builder => builder.WithOrigins(corsConfig.Origins).AllowAnyMethod().AllowAnyHeader());
+                });    
+            }
             
             var cacheConfig = new CacheConfiguration();
             Configuration.GetSection(CacheConfiguration.Configuration).Bind(cacheConfig);
@@ -42,7 +55,7 @@ namespace dev.codingWombat.Vombatidae
                 {
                     options.Configuration = cacheConfig.Host;
                     options.InstanceName = cacheConfig.Instance;
-                }); 
+                });
             }
             else
             {
@@ -61,6 +74,11 @@ namespace dev.codingWombat.Vombatidae
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            if (UseCors)
+            {
+                app.UseCors();
+            }
 
             app.UseAuthorization();
 
