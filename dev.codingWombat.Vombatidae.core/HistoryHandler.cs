@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
 using dev.codingWombat.Vombatidae.store;
+using Microsoft.VisualBasic;
 
 namespace dev.codingWombat.Vombatidae.core
 {
@@ -16,7 +19,7 @@ namespace dev.codingWombat.Vombatidae.core
 
     public class HistoryHandler : IHistoryHandler
     {
-        private ConcurrentDictionary<string,RequestResponseHistory> _historyCache;
+        private ConcurrentDictionary<string, RequestResponseHistory> _historyCache;
         private readonly ICacheRepository _repository;
 
         public HistoryHandler(ICacheRepository repository)
@@ -27,16 +30,19 @@ namespace dev.codingWombat.Vombatidae.core
 
         public RequestResponseHistory Load(Guid id)
         {
-            return _historyCache[id.ToString()];
+            return !_historyCache.ContainsKey(id.ToString())
+                ? new RequestResponseHistory {History = new ConcurrentQueue<RequestResponse>(), Id = id}
+                : _historyCache[id.ToString()];
         }
 
         public void AppendRequest(Guid id, RequestResponse requestResponse)
         {
             if (!_historyCache.ContainsKey(id.ToString()))
             {
-               _historyCache[id.ToString()] = new RequestResponseHistory{History = new ConcurrentQueue<RequestResponse>(), Id = id};
+                _historyCache[id.ToString()] = new RequestResponseHistory
+                    {History = new ConcurrentQueue<RequestResponse>(), Id = id};
             }
-            
+
             _historyCache[id.ToString()].Append(requestResponse);
         }
 
