@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 #### Feeding
-PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/put
+PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/foo/bar?method=put
 Content-Type: application/json
 
 {
@@ -85,12 +85,12 @@ GET https://localhost:5001/Vombatidae/{{guid}}
 Accept: application/json
 
 ### GET docker
-GET http://localhost:8081/Vombatidae/{{guid}}
+GET https://api.codingwombat.dev:5001/Vombatidae/01aee2a3-443f-44ff-a61b-f83fea02ca69?foo=bar&foo=bar2
 Accept: application/json
 
 
 ###
-PUT https://localhost:5001/Vombatidae/{{guid}}
+PUT https://localhost:5001/Vombatidae/{{guid}}/foo/bar
 Content-Type: application/json
 
 {
