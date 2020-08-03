@@ -27,7 +27,7 @@ namespace dev.codingWombat.Vombatidae.core
         public async Task<Response> ReadResponse(string httpMethod, Guid guid)
         {
             var burrow = await _reader.Read(guid);
-            var response = await _cache.ReadResponseBodyAsync(httpMethod, guid);
+            var response = await _cache.ReadResponseBodyAsync(httpMethod.ToUpper(), guid);
 
             var statusCodeElement = response.GetProperty("StatusCode");
             var responseMessageElement = response.GetProperty("ResponseMessage");

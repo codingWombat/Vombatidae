@@ -53,6 +53,11 @@ Content-Type: application/json
   }
 }
 
+#### query feed
+GET https://localhost:5001/Vombatidae/Feed/{{guid}}/put
+Content-Type: application/json
+
+
 #### Feeding docker
 PUT http://localhost:8081/Vombatidae/Feed/{{guid}}/get
 Content-Type: application/json
