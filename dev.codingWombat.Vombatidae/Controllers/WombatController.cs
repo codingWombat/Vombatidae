@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using dev.codingWombat.Vombatidae.business;
@@ -7,6 +9,7 @@ using dev.codingWombat.Vombatidae.core;
 using dev.codingWombat.Vombatidae.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 
 namespace dev.codingWombat.Vombatidae.Controllers
 {
@@ -40,31 +43,32 @@ namespace dev.codingWombat.Vombatidae.Controllers
         [RouteValidationFilter]
         public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
-            return await ActionResult(guid, "GET", HttpContext.Request.Body);
+            return await ActionResult(guid, "GET", HttpContext.Request.Body, HttpContext.Request.Query.ToList());
         }
 
         [HttpPost("{Guid}")]
         [RouteValidationFilter]
         public async Task<IActionResult> Post([FromRoute] Guid guid)
         {
-            return await ActionResult(guid, "POST", HttpContext.Request.Body);
+            return await ActionResult(guid, "POST", HttpContext.Request.Body, HttpContext.Request.Query.ToList());
         }
 
         [HttpPut("{Guid}")]
         [RouteValidationFilter]
         public async Task<IActionResult> Put([FromRoute] Guid guid)
         {
-            return await ActionResult(guid, "PUT", HttpContext.Request.Body);
+            return await ActionResult(guid, "PUT", HttpContext.Request.Body, HttpContext.Request.Query.ToList());
         }
 
         [HttpDelete("{Guid}")]
         [RouteValidationFilter]
         public async Task<IActionResult> Delete([FromRoute] Guid guid)
         {
-            return await ActionResult(guid, "DELETE", HttpContext.Request.Body);
+            
+            return await ActionResult(guid, "DELETE", HttpContext.Request.Body, HttpContext.Request.Query.ToList());
         }
 
-        private async Task<IActionResult> ActionResult(Guid id, string httpMethod, Stream requestBody)
+        private async Task<IActionResult> ActionResult(Guid id, string httpMethod, Stream requestBody, List<KeyValuePair<string,StringValues>> queryParams)
         {
             var response = await _reader.ReadResponse(httpMethod, id);
             using (var streamReader = new StreamReader(requestBody))
@@ -77,7 +81,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
                         Timestamp = DateTime.UtcNow, HttpMethod = httpMethod, ResponseBody = response,
                         RequestBody = string.IsNullOrWhiteSpace(body)
                             ? JsonDocument.Parse("{}").RootElement
-                            : JsonDocument.Parse(body).RootElement
+                            : JsonDocument.Parse(body).RootElement,
+                        QueryParams = queryParams
                     }
                 );
             }
