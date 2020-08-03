@@ -12,11 +12,13 @@ namespace dev.codingWombat.Vombatidae.Controllers
     {
         private readonly ILogger<FeedController> _logger;
         private readonly IResponseUpserter _upserter;
-
-        public FeedController(ILogger<FeedController> logger, IResponseUpserter upserter)
+        private readonly IResponseReader _reader;
+        
+        public FeedController(ILogger<FeedController> logger, IResponseUpserter upserter, IResponseReader reader)
         {
             _logger = logger;
             _upserter = upserter;
+            _reader = reader;
         }
 
         [HttpPut("{Guid}/{Method}")]
@@ -25,6 +27,14 @@ namespace dev.codingWombat.Vombatidae.Controllers
         {
             await _upserter.UpsertResponse(guid, method, HttpContext.Request.Body);
             return Ok();
+        }
+        
+        [HttpGet("{Guid}/{Method}")]
+        [RouteValidationFilter]
+        public async Task<IActionResult> Get([FromRoute] Guid guid, [FromRoute] string method)
+        {
+            var response = await _reader.ReadResponse(method, guid);
+            return Ok(response);
         }
     }
 }
