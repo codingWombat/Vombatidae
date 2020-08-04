@@ -87,7 +87,6 @@ The response itself will be send inside the body in the following format:
     ````
     `StatusCode` is the http response code used for the response.
     `ResponseMessage` is a wrapper for the response message it can contain any JSON you want.
-
 You can query the prepared message by sending a get request to the same endpoint.
 
 3. The endpoint that will produce your stored response is reachable via `/Vombatidae/{{guid}}`  plus the route you added.
