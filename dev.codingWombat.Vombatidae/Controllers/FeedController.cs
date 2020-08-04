@@ -13,27 +13,35 @@ namespace dev.codingWombat.Vombatidae.Controllers
         private readonly ILogger<FeedController> _logger;
         private readonly IResponseUpserter _upserter;
         private readonly IResponseReader _reader;
+        private readonly IControllerHelper _helper;
+
+        private const string basePath = "/Vombatidae/Feed/";
         
-        public FeedController(ILogger<FeedController> logger, IResponseUpserter upserter, IResponseReader reader)
+        public FeedController(ILogger<FeedController> logger, IResponseUpserter upserter, IResponseReader reader, IControllerHelper helper)
         {
             _logger = logger;
             _upserter = upserter;
             _reader = reader;
+            _helper = helper;
         }
 
-        [HttpPut("{Guid}/{Method}")]
+        [HttpPut("{Guid}/{**Wildcard}/")]
         [RouteValidationFilter]
-        public async Task<IActionResult> Put([FromRoute] Guid guid, [FromRoute] string method)
+        public async Task<IActionResult> Put([FromRoute] Guid guid)
         {
-            await _upserter.UpsertResponse(guid, method, HttpContext.Request.Body);
+            var method = HttpContext.Request.Query["method"];
+            var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
+            await _upserter.UpsertResponse(guid, dynamicRoute+"_"+method[0].ToUpper(), HttpContext.Request.Body);
             return Ok();
         }
         
-        [HttpGet("{Guid}/{Method}")]
+        [HttpGet("{Guid}/{**Wildcard}/")]
         [RouteValidationFilter]
-        public async Task<IActionResult> Get([FromRoute] Guid guid, [FromRoute] string method)
+        public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
-            var response = await _reader.ReadResponse(method, guid);
+            var method = HttpContext.Request.Query["method"];
+            var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
+            var response = await _reader.ReadResponse(dynamicRoute+"_"+method[0].ToUpper(), guid);
             return Ok(response);
         }
     }

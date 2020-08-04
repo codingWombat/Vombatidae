@@ -8,7 +8,7 @@ namespace dev.codingWombat.Vombatidae.core
 {
     public interface IResponseUpserter
     {
-        Task UpsertResponse(Guid guid, string method, Stream response);
+        Task UpsertResponse(Guid guid, string path, Stream response);
     }
 
     public class ResponseUpserter : IResponseUpserter
@@ -22,13 +22,13 @@ namespace dev.codingWombat.Vombatidae.core
             _logger = logger;
         }
 
-        public async Task UpsertResponse(Guid guid, string method, Stream response)
+        public async Task UpsertResponse(Guid guid, string path, Stream response)
         {
             using (var streamReader = new StreamReader(response))
             {
                 var preparedResponse = await streamReader.ReadToEndAsync();
-                await _cache.WriteResponseBodyAsync(method.ToUpper(), guid, preparedResponse);
-                _logger.LogDebug("Saved new repsonse for burrow {} and method {}", guid.ToString(), method);
+                await _cache.WriteResponseBodyAsync(path, guid, preparedResponse);
+                _logger.LogDebug("Saved new response for burrow {} and method {}", guid.ToString(), path);
             }
         }
     }

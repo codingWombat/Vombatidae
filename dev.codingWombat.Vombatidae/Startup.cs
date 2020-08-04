@@ -23,7 +23,7 @@ namespace dev.codingWombat.Vombatidae
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.TryAddTransient<IResponseHelper, ResponseHelper>();
+            services.TryAddTransient<IControllerHelper, ControllerHelper>();
             services.AddControllers();
             services.AddCoreServiceConfig();
             services.AddStoreServiceConfig();

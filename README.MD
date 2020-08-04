@@ -70,9 +70,9 @@ To use **Vombatidae** as a mock server you need the following endpoints:
 1. To create a new endpoint (burrow) send a `GET` request to `/Vombatidae/Burrow`.
 The response will contain a `Guid` that will be used in all following URLs.
 
-2. To save a response send a `PUT` request to `/Vombatidae/Feed/{{guid}}/{RESTverb}`.
+2. To save a response send a `PUT` request to `/Vombatidae/Feed/{{guid}}` and attach ``?method={{RESTVerb)``.
 The `Guid` defines what endpoint should be used and `RESTverb` defines for what requests the response should be used.
-Allowed values are: `GET`, `POST`, `PUT`, `DELETE`.
+Allowed values are: `GET`, `POST`, `PUT`, `DELETE`. Behind the `guid` you can attach as many routing steps as you like so `/Vombatidae/Feed/{{guid}}` would be different to `/Vombatidae/Feed/{{guid}}/` but also `/Vombatidae/Feed/{{guid}}/foo/bar/baz` is possible.
 The response itself will be send inside the body in the following format:
     ````JSON
         {
@@ -88,8 +88,9 @@ The response itself will be send inside the body in the following format:
     `StatusCode` is the http response code used for the response.
     `ResponseMessage` is a wrapper for the response message it can contain any JSON you want.
 
+You can query the prepared message by sending a get request to the same endpoint.
 
-3. The endpoint that will produce your stored response is reachable via `/Vombatidae/{{guid}}`.
+3. The endpoint that will produce your stored response is reachable via `/Vombatidae/{{guid}}`  plus the route you added.
 
 4. To query the history send a `GET` request to `/Vombatidae/history/{{guid}}`.
 

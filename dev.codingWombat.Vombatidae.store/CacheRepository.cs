@@ -82,7 +82,7 @@ namespace dev.codingWombat.Vombatidae.store
 
             if (string.IsNullOrWhiteSpace(response))
             {
-                throw new Exception("Respone not existing");
+                throw new Exception("Response not existing");
             }
 
             _logger.LogDebug("Finished loading response for guid {} and method {} from cache.", guid.ToString(),

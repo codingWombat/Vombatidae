@@ -13,5 +13,6 @@ namespace dev.codingWombat.Vombatidae.business
         public JsonElement RequestBody { get; set; }
         public Response ResponseBody { get; set; }
         public List<KeyValuePair<string, StringValues>> QueryParams { get; set; }
+        public string Route { get; set; }
     }
 }
