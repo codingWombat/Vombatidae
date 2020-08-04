@@ -80,7 +80,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
                         RequestBody = string.IsNullOrWhiteSpace(body)
                             ? JsonDocument.Parse("{}").RootElement
                             : JsonDocument.Parse(body).RootElement,
-                        QueryParams = queryParams
+                        QueryParams = queryParams,
+                        Route = dynamicRoute
                     }
                 );
             }

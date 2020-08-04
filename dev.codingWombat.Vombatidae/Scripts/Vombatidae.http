@@ -40,11 +40,11 @@ Content-Type: application/json
 }
 
 #### Feeding
-PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/foo/bar?method=put
+PUT https://localhost:5001/Vombatidae/Feed/{{guid}}/?method=put
 Content-Type: application/json
 
 {
-  "StatusCode": 200,
+  "StatusCode": 202,
   "ResponseMessage": {
     "String": "this is a test string",
     "int": 123456789,
@@ -54,7 +54,7 @@ Content-Type: application/json
 }
 
 #### query feed
-GET https://localhost:5001/Vombatidae/Feed/{{guid}}/put
+GET https://localhost:5001/Vombatidae/Feed/{{guid}}/foo/bar?method=put
 Content-Type: application/json
 
 
@@ -85,12 +85,12 @@ GET https://localhost:5001/Vombatidae/{{guid}}
 Accept: application/json
 
 ### GET docker
-GET https://api.codingwombat.dev:5001/Vombatidae/01aee2a3-443f-44ff-a61b-f83fea02ca69?foo=bar&foo=bar2
+GET https://api.codingwombat.dev:5001/Vombatidae/{{guid}}
 Accept: application/json
 
 
 ###
-PUT https://localhost:5001/Vombatidae/{{guid}}/foo/bar
+PUT https://localhost:5001/Vombatidae/{{guid}}/
 Content-Type: application/json
 
 {

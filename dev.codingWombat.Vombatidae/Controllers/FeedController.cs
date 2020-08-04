@@ -32,7 +32,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
             var method = HttpContext.Request.Query["method"];
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
             await _upserter.UpsertResponse(guid, dynamicRoute+"_"+method[0].ToUpper(), HttpContext.Request.Body);
-            return NotFound();
+            return Ok();
         }
         
         [HttpGet("{Guid}/{**Wildcard}/")]
@@ -42,7 +42,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
             var method = HttpContext.Request.Query["method"];
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
             var response = await _reader.ReadResponse(dynamicRoute+"_"+method[0].ToUpper(), guid);
-            return NotFound(response);
+            return Ok(response);
         }
     }
 }
