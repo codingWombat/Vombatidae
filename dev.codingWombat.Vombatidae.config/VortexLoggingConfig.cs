@@ -3,6 +3,6 @@
     public class VortexLoggingConfig
     {
         public const string Configuration = "VortexLogging";
-        public bool Enbale { get; set; } = false;
+        public bool Enable { get; set; } = false;
     }
 }

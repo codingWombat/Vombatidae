@@ -77,7 +77,7 @@ namespace dev.codingWombat.Vombatidae
             var loggerConfig = new VortexLoggingConfig();
             Configuration.GetSection(VortexLoggingConfig.Configuration).Bind(loggerConfig);
 
-            if (loggerConfig.Enbale)
+            if (loggerConfig.Enable)
             {
                 var vortex = new VortexLoggerConfiguration();
                 Configuration.GetSection("Logging").GetSection("Vortex").Bind(vortex);
