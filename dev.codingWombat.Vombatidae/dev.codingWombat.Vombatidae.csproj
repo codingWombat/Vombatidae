@@ -9,6 +9,7 @@
     <ProjectReference Include="..\dev.codingWombat.Vombatidae.core\dev.codingWombat.Vombatidae.core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CodingWombat.Incub8Vortex.Logger" Version="0.0.0.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
   </ItemGroup>

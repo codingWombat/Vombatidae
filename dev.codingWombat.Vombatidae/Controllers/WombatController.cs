@@ -22,7 +22,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
         private readonly IHistoryHandler _historyHandler;
 
         private const string basePath = "/Vombatidae/";
-        
+
         public WombatController(ILogger<WombatController> logger, IResponseReader reader,
             IControllerHelper helper, IHistoryHandler historyHandler)
         {
@@ -37,7 +37,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
         public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, HttpContext.Request, basePath) ?? "";
-            return await ActionResult(guid, "GET", HttpContext.Request.Body, HttpContext.Request.Query.ToList(), dynamicRoute);
+            return await ActionResult(guid, "GET", HttpContext.Request.Body, HttpContext.Request.Query.ToList(),
+                dynamicRoute);
         }
 
         [HttpPost("{Guid}/{**Wildcard}")]
@@ -54,7 +55,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
         public async Task<IActionResult> Put([FromRoute] Guid guid)
         {
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, HttpContext.Request, basePath) ?? "";
-            return await ActionResult(guid, "PUT", HttpContext.Request.Body, HttpContext.Request.Query.ToList(), dynamicRoute);
+            return await ActionResult(guid, "PUT", HttpContext.Request.Body, HttpContext.Request.Query.ToList(),
+                dynamicRoute);
         }
 
         [HttpDelete("{Guid}/{**Wildcard}")]
@@ -62,13 +64,14 @@ namespace dev.codingWombat.Vombatidae.Controllers
         public async Task<IActionResult> Delete([FromRoute] Guid guid)
         {
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, HttpContext.Request, basePath) ?? "";
-            return await ActionResult(guid, "DELETE", HttpContext.Request.Body, HttpContext.Request.Query.ToList(), dynamicRoute);
+            return await ActionResult(guid, "DELETE", HttpContext.Request.Body, HttpContext.Request.Query.ToList(),
+                dynamicRoute);
         }
 
         private async Task<IActionResult> ActionResult(Guid id, string httpMethod, Stream requestBody,
             List<KeyValuePair<string, StringValues>> queryParams, string dynamicRoute)
         {
-            var response = await _reader.ReadResponse(dynamicRoute+"_"+httpMethod.ToUpper(), id);
+            var response = await _reader.ReadResponse(dynamicRoute + "_" + httpMethod.ToUpper(), id);
             using (var streamReader = new StreamReader(requestBody))
             {
                 var body = await streamReader.ReadToEndAsync();
@@ -86,6 +89,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
                 );
             }
 
+            _logger.LogDebug("Endpoint with Guid {} and dynamic route {} and method {} called.", id.ToString(),
+                dynamicRoute, httpMethod);
             return _helper.CreateHttpResponse(response);
         }
     }

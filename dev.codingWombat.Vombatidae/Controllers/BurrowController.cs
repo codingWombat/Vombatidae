@@ -22,7 +22,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
         public async Task<ActionResult<Burrow>> Get()
         {
             var burrow = await _creator.Create();
-            _logger.LogInformation("New burrow created with Guid: {}", burrow.Id.ToString());
+            _logger.LogDebug("New burrow created with Guid: {}", burrow.Id.ToString());
             return Ok(burrow);
         }
     }

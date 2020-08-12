@@ -32,6 +32,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
             var method = HttpContext.Request.Query["method"];
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
             await _upserter.UpsertResponse(guid, dynamicRoute+"_"+method[0].ToUpper(), HttpContext.Request.Body);
+            _logger.LogDebug("Response saved for Guid {} with dynamic route part {} and method {}", guid.ToString(), dynamicRoute, method[0]);
             return Ok();
         }
         
@@ -42,6 +43,8 @@ namespace dev.codingWombat.Vombatidae.Controllers
             var method = HttpContext.Request.Query["method"];
             var dynamicRoute = _helper.GetDynamicPartOfRoute(guid, Request, basePath);
             var response = await _reader.ReadResponse(dynamicRoute+"_"+method[0].ToUpper(), guid);
+            
+            _logger.LogDebug("Response read for Guid {} with dynamic route part {} and method {}", guid.ToString(), dynamicRoute, method[0]);
             return Ok(response);
         }
     }
