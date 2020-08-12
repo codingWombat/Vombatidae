@@ -1,4 +1,5 @@
 using System;
+using CodingWombat.Incub8Vortex.Logger;
 using dev.codingWombat.Vombatidae.config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace dev.codingWombat.Vombatidae
 {
@@ -65,11 +67,21 @@ namespace dev.codingWombat.Vombatidae
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            
+            var loggerConfig = new VortexLoggingConfig();
+            Configuration.GetSection(VortexLoggingConfig.Configuration).Bind(loggerConfig);
+
+            if (loggerConfig.Enbale)
+            {
+                var vortex = new VortexLoggerConfiguration();
+                Configuration.GetSection("Logging").GetSection("Vortex").Bind(vortex);
+                loggerFactory.AddVortexLogger(vortex);
             }
             
             app.UseForwardedHeaders(new ForwardedHeadersOptions

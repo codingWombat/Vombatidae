@@ -10,6 +10,7 @@ namespace dev.codingWombat.Vombatidae.config
         {
             services.Configure<CacheConfiguration>(configuration.GetSection(CacheConfiguration.Configuration));
             services.Configure<CorsConfiguration>(configuration.GetSection(CorsConfiguration.Configuration));
+            services.Configure<VortexLoggingConfig>(configuration.GetSection(VortexLoggingConfig.Configuration));
 
             return services;
         }

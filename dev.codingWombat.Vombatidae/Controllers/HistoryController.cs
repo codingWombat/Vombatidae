@@ -25,7 +25,7 @@ namespace dev.codingWombat.Vombatidae.Controllers
 
         [HttpGet("{Guid}")]
         [RouteValidationFilter]
-        public async Task<IActionResult> Get([FromRoute] Guid guid)
+        public IActionResult Get([FromRoute] Guid guid)
         {
             var requestResponseHistory = _historyHandler.Load(guid);
 
